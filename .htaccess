@@ -17,14 +17,27 @@
 </IfModule>
 
 <IfModule mod_headers.c>
-  # Prevenir caché para el index.html
-  <FilesMatch "^index\.html$">
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  # Prevenir que cualquier archivo HTML o entrada a la aplicación se guarde en caché del navegador
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
     Header set Pragma "no-cache"
     Header set Expires "0"
   </FilesMatch>
 
+  # Forzar no-caché en la raíz /
+  <FilesMatch "^$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  # Los assets compilados con hash único (ej: index-PxPz-5Wv.js) se aceleran al máximo
   <FilesMatch "\.(css|js|png|jpg|jpeg|gif|svg|ico|webp|woff2?|ttf|eot)$">
     Header set Cache-Control "max-age=31536000, public"
   </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  # Compresión GZIP de alta velocidad para reducir el tráfico de red en un 75-80%
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/x-javascript application/json application/xml image/svg+xml
 </IfModule>
