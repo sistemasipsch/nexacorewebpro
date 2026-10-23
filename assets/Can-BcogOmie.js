@@ -1,1 +1,0 @@
-import"./vendor-react-D76uVFMK.js";import{u as l}from"./index-Q5ANRLJH.js";const p=({permission:e,permissions:n,children:r,all:o=!1})=>{const{hasPermission:t,hasAnyPermission:u,permissions:a}=l(),s=e||n;return s?Array.isArray(s)?o?s.every(i=>a.includes(i))?r:null:u(s)?r:null:t(s)?r:null:r};export{p as C};
